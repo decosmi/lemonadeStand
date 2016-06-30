@@ -4,19 +4,21 @@ function startLemonadeStand(){
 }
 
 function simulate(){
-	this.days=document.getElementById("days").value;
-	this.numberPeople=document.getElementById("people").value;
-	this.pricePerCup=document.getElementById("price").value;
-	this.costPerCup=document.getElementById("cost").value;
+	var days=document.getElementById("days").value;
+	var numberPeople=document.getElementById("people").value;
+	var pricePerCup=document.getElementById("price").value;
+	var costPerCup=document.getElementById("cost").value;
+	console.log(days,numberPeople,pricePerCup,costPerCup);
 	var theBestStand = new LemonadeStand();
 	var theWeather = new Weather();
-	theWeather.retrieveWeather(this.days);
+	theWeather.retrieveWeather(days);
 	var individual=new Person();
-	individual.addIndividuals(this.numberPeople);
-	theBestStand.determineBuyers(this.todaysHigh);//doesn't work yet// will closure take care of finding todaysHigh?
+	individual.addIndividuals(numberPeople);
+	console.log(individual.peopleArray);
+	//theBestStand.determineBuyers(this.todaysHigh);//doesn't work yet// will closure take care of finding todaysHigh?
 	theBestStand.getGlassesSold();
-	theBestStand.calculateProfit(this.pricePerCup,this.costPerCup);
-	theBestStand.makeOutputTable(this.days);
+	theBestStand.calculateProfit(pricePerCup,costPerCup);
+	theBestStand.makeOutputTable(days,numberPeople,100,10);
 
 }
 
@@ -26,7 +28,6 @@ function Weather(){
 		for(var i=0; i<days; i++){
 			var todaysHigh=document.weather.forecast[i].high;
 			this.getForecast.push(todaysHigh);
-			console.log(this.getForecast);
 		}
 	}
 }
@@ -48,9 +49,9 @@ function Person() {
 function LemonadeStand(){
 	this.likelihoodArray=[];
 	
-	this.determineBuyers=function(){
+	/*this.determineBuyers=function(){
 
-	this.peopleArray.forEach(function Buy(currentValue)//it won't know where to find peopleArray
+	peopleArray.forEach(function Buy(currentValue)//it won't know where to find peopleArray
 
 		this.inclination=function(){
 			Math.random()};//will this work? Test it! 
@@ -59,7 +60,7 @@ function LemonadeStand(){
 		var likelihood = todaysHigh > 75 ? (todaysHigh%75)*this.inclination/pricePerCup : this.inclination/pricePerCup;
 		this.inclination = likelihood;
 		this.likelihoodArray.push(likelihood > 0.50);
-		});
+		});*/
 
 	this.getGlassesSold=function (){
 		function isTrue(value){
