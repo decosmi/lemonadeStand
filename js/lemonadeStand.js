@@ -3,11 +3,15 @@ function startLemonadeStand(){
 	console.log(document.weather);
 }
 
-function saveUserInput(){
+function simulate(){
 	this.days=document.getElementById("days").value;
 	this.numberPeople=document.getElementById("people").value;
 	this.pricePerCup=document.getElementById("price").value;
 	this.costPerCup=document.getElementById("cost").value;
+	var theBestStand = new LemonadeStand();
+	var theWeather = new Weather();
+	theWeather.retrieveWeather(this.days);
+
 	console.log(days,numberPeople,pricePerCup,costPerCup);
 }
 
@@ -79,7 +83,6 @@ function LemonadeStand(){
 	
 }			
 
-var theBestStand= new LemonadeStand();
 
 
 
