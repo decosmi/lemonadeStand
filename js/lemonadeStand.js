@@ -8,17 +8,16 @@ function simulate(){
 	var numberPeople=document.getElementById("people").value;
 	var pricePerCup=document.getElementById("price").value;
 	var costPerCup=document.getElementById("cost").value;
-	console.log(days,numberPeople,pricePerCup,costPerCup);
-	var theBestStand = new LemonadeStand();
+	//console.log(days,numberPeople,pricePerCup,costPerCup);
 	var theWeather = new Weather();
 	theWeather.retrieveWeather(days);
+	var theBestStand = new LemonadeStand();
 	var individual=new Person();
 	individual.addIndividuals(numberPeople);
-	console.log(individual.peopleArray);
-	//theBestStand.determineBuyers(this.todaysHigh);//doesn't work yet// will closure take care of finding todaysHigh?
+	//theBestStand.determineBuyers(theWeather.todaysHigh);
 	theBestStand.getGlassesSold();
 	theBestStand.calculateProfit(pricePerCup,costPerCup);
-	theBestStand.makeOutputTable(days,numberPeople,100,10);
+	theBestStand.makeOutputTable(days,numberPeople,numberOfGlassesSold,profit);
 
 }
 
@@ -33,41 +32,33 @@ function Weather(){
 }
 
 function Person() {
-	this.peopleArray=[];
-	this.addIndividuals=function(numberPeople){ //we get numberPeople from the user input
-		for (var i=numberPeople; i>0; i--){  
-		//create an instance of the person class
-		var newIndividual=new Person();
-
-		//then push that instance into the peopleArray
-		this.peopleArray.push(newIndividual);
-		}
+	this.baseLikelihood=Math.random();
+	this.determineLikelihood=function(todaysHigh,pricePerCup){	
+		var likelihood = todaysHigh > 75 ? (todaysHigh%75)*this.baseLikelihood/pricePerCup : this.baseLikelihood/pricePerCup;
 	}
 }	
 
 
 function LemonadeStand(){
+	this.peopleArray=[];
 	this.likelihoodArray=[];
-	
-	/*this.determineBuyers=function(){
+	this.addIndividuals=function(numberPeople){ //we get numberPeople from the user input
+		for (var i=numberPeople; i>0; i--){  
+			//create an instance of the person class
+			var newIndividual=new Person();
 
-	peopleArray.forEach(function Buy(currentValue)//it won't know where to find peopleArray
+			//then push that instance into the peopleArray
+			this.peopleArray.push(newIndividual);
+		}
+	}
 
-		this.inclination=function(){
-			Math.random()};//will this work? Test it! 
-
-		function(pricePerCup, todaysHigh){	
-		var likelihood = todaysHigh > 75 ? (todaysHigh%75)*this.inclination/pricePerCup : this.inclination/pricePerCup;
-		this.inclination = likelihood;
-		this.likelihoodArray.push(likelihood > 0.50);
-		});*/
 
 	this.getGlassesSold=function (){
-		function isTrue(value){
-			return value==true;
+		function isTrue(person){
+			return person.determineLikelihood() > 0.5;
 		}
 
-		var glassesSold=this.likelihoodArray.filter(isTrue);//doesn't know where to find this likelihood array
+		var glassesSold=this.peopleArray.filter(isTrue);//doesn't know where to find this likelihood array
 		var numberOfGlassesSold= glassesSold.length;
 	}
 
