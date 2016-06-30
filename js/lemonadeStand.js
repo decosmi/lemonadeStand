@@ -11,8 +11,13 @@ function simulate(){
 	var theBestStand = new LemonadeStand();
 	var theWeather = new Weather();
 	theWeather.retrieveWeather(this.days);
+	var individual=new Person();
+	individual.addIndividuals(this.numberPeople);
+	theBestStand.determineBuyers(this.todaysHigh);//doesn't work yet// will closure take care of finding todaysHigh?
+	theBestStand.getGlassesSold();
+	theBestStand.calculateProfit(this.pricePerCup,this.costPerCup);
+	theBestStand.makeOutputTable(this.days);
 
-	console.log(days,numberPeople,pricePerCup,costPerCup);
 }
 
 function Weather(){ 	
@@ -28,35 +33,40 @@ function Weather(){
 
 function Person() {
 	this.peopleArray=[];
-	this.likelihoodArray=[];
-
-	this.addIndividuals=function(numberPeople,pricePerCup,todaysHigh){ //we get numberPeople from the user input
+	this.addIndividuals=function(numberPeople){ //we get numberPeople from the user input
 		for (var i=numberPeople; i>0; i--){  
 		//create an instance of the person class
 		var newIndividual=new Person();
 
 		//then push that instance into the peopleArray
 		this.peopleArray.push(newIndividual);
+		}
+	}
+}	
 
-		//find out whether that person will buy or not
-		this.inclination=Math.random();
 
-		this.buy=function(pricePerCup, todaysHigh){	//get pricePerCup from user input, not sure how I am going to link to weather function
+function LemonadeStand(){
+	this.likelihoodArray=[];
+	
+	this.determineBuyers=function(){
+
+	this.peopleArray.forEach(function Buy(currentValue)//it won't know where to find peopleArray
+
+		this.inclination=function(){
+			Math.random()};//will this work? Test it! 
+
+		function(pricePerCup, todaysHigh){	
 		var likelihood = todaysHigh > 75 ? (todaysHigh%75)*this.inclination/pricePerCup : this.inclination/pricePerCup;
 		this.inclination = likelihood;
 		this.likelihoodArray.push(likelihood > 0.50);
-		}
-		}	
-	}
-}
+		});
 
-function LemonadeStand(){
 	this.getGlassesSold=function (){
 		function isTrue(value){
 			return value==true;
 		}
 
-		var glassesSold=this.likelihoodArray.filter(isTrue);
+		var glassesSold=this.likelihoodArray.filter(isTrue);//doesn't know where to find this likelihood array
 		var numberOfGlassesSold= glassesSold.length;
 	}
 
@@ -64,13 +74,13 @@ function LemonadeStand(){
 		var profit=pricePerCup-costPerCup;
 	}
 
-	this.makeOutputTable=function(days){
+	this.makeOutputTable=function(days,numberPeople,numberOfGlassesSold,profit){
 		var OutputHTML="<table>"
 		OutputHTML+="<th><td>Day</td><td>Number of Passersby</td><td>Glasses Sold</td><td>Profit</td></th>";
 			for(var i=0; i<days; i++){
 				OutputHTML+="<tr>";
 				for (var d=0; d<4; d++){
-				OutputHTML+="<td>i</td><td>numberPeople</td><td>numberOfGlassesSold(from function getGlassesSold)</td><td>Profit(from function calculateProfit)</td></tr>";
+				OutputHTML+="<td>"+i+"</td><td>"+numberPeople+"</td><td>"+numberOfGlassesSold+"</td><td>"+profit+"</td></tr>";
 				}
 				OutputHTML+="</tr>";
 			}
@@ -79,8 +89,6 @@ function LemonadeStand(){
 		findIDforOutputTable.innerHTML=OutputHTML;
 
 	}
-// i need a button function that upon clicking the button, it first takes the user's values and stores them in variables. 
-	
 }			
 
 
