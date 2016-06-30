@@ -66,7 +66,7 @@ function LemonadeStand(){
 			for(var i=0; i<days; i++){
 				OutputHTML+="<tr>";
 				for (var d=0; d<4; d++){
-				OutputHTML+="<td>i</td><td>numberPeople</td><td>numberOfGlassesSold(from function getGlassesSold)</td><td>Profit(from function calculateProfit)</td></tr>";
+				OutputHTML+="<td>i</td><td>numberPeople</td><td>numberOfGlassesSold(from function getGlassesSold)</td><td>profit(from function calculateProfit)</td></tr>";
 				}
 				OutputHTML+="</tr>";
 			}
